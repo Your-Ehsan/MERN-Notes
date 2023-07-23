@@ -18,6 +18,11 @@ const { mongoose } = require("../Database"),
       type: Date,
       default: Date.now,
     },
+    lastLogin: {
+      // TODO: last login functionality will be added soon.. But for now it is not important at all 🔥.
+      type: Date,
+      default: Date.now,
+    },
   }),
   Users = mongoose.model("users", UserSchema);
 // _user.createIndexes();

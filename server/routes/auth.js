@@ -6,27 +6,32 @@ const { body, validationResult } = require("express-validator"),
   jwt = require("jsonwebtoken"),
   AuthRouter = express.Router(),
   fetchUser = require("../middleware/fetchUser"),
-  JWT_SECRET = process.env.JWT_SECRET; // This should be at safe place & yes! this is not the correct way
+  JWT_SECRET = process.env.JWT_SECRET;
 
 // 🔥 Create user using POST:/api/auth/createuser
 AuthRouter.post(
   "/createuser",
   [
     body("email", "email is not valid!").isEmail(),
-    body("name", "name should be greater then 3").isLength({ min: 3 }),
-    body("password", "password must be atleast 4 characters").isLength({
-      min: 4,
-    }),
+    body("name", "name should be greater then 3")
+      .isString()
+      .isLength({ min: 3 }),
+    body("password", "password must be atleast 4 characters")
+      .exists()
+      .isStrongPassword()
+      .isLength({
+        min: 4,
+      }),
   ],
   async (req, res) => {
-    const _err = validationResult(req),
-      { email, name } = req.body;
-
-    if (!_err.isEmpty()) {
-      return res.status(400).json({ error: _err.array() });
-    }
-
     try {
+      const _err = validationResult(req),
+        { email, name } = req.body;
+
+      if (!_err.isEmpty()) {
+        return res.status(400).json({ error: _err.array() });
+      }
+
       let _user = await Users.findOne({ email }),
         _secPas = await bcrypt.hash(
           req.body.password,
@@ -64,7 +69,10 @@ AuthRouter.post(
   "/login",
   [
     body("email", "user alreday exist!").isString().isEmail(),
-    body("password", "password is not valid").exists().isLength({ min: 4 }),
+    body("password", "password is not valid")
+      .exists()
+      .isStrongPassword()
+      .isLength({ min: 4 }),
   ],
   async (req, res) => {
     const error = validationResult(req),
@@ -103,7 +111,7 @@ AuthRouter.post(
 AuthRouter.post("/getuser", fetchUser, async (req, res) => {
   try {
     const _user = await Users.findById(req.user.id).select("-password");
-    
+
     if (_user) {
       res.send(_user);
     }
@@ -112,4 +120,5 @@ AuthRouter.post("/getuser", fetchUser, async (req, res) => {
     res.status(401).send({ error: "access token expired" });
   }
 });
+
 module.exports = AuthRouter;
