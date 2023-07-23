@@ -1,5 +1,27 @@
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+
 function App() {
-  return <h1 className="underline text-cyan-700 font-bold text-5xl text-center">Tailwind is installed!</h1>;
+  return (
+    <RouterProvider
+      router={createBrowserRouter(
+        createRoutesFromElements(
+          <Route element={<MainLayout />}>
+            {/* TODO: convert this ⬆ to versions */}
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+          </Route>
+        )
+      )}
+    />
+  );
 }
 
 export default App;
