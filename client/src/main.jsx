@@ -6,8 +6,8 @@ import { NotesContextProvider } from "./contexts/NotesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <NotesContextProvider>
+    {/* <NotesContextProvider> */}
       <App />
-    </NotesContextProvider>
+    {/* </NotesContextProvider> */}
   </React.StrictMode>
 );

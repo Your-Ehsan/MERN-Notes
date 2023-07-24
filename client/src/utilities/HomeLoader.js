@@ -22,7 +22,7 @@ const HomeLoader = async () => {
     return json;
   } catch (error) {
     console.log(error);
-    return error;
+    // return error;
   }
 };
 
