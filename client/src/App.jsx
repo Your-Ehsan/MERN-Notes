@@ -8,6 +8,7 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { HomeLoader } from "./utilities/HomeLoader";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         createRoutesFromElements(
           <Route element={<MainLayout />}>
             {/* TODO: convert this ⬆ to versions */}
-            <Route index element={<Home />} />
+            <Route index loader={HomeLoader} element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
           </Route>

@@ -4,7 +4,10 @@ const jwt = require("jsonwebtoken"),
   fetchUser = (req, res, callback) => {
     // Get user from jwt token
     const token = req.header("auth-token"),
-      _data = jwt.verify(token, JWT_SECRET);
+      // origin = req.header({
+      //   "Access-Control-Allow-Origin": "http://localhost:5173",
+      // }),
+    _data = jwt.verify(token, JWT_SECRET);
 
     if (!token) {
       res.status(401).send({ error: "credentials are wrong!" });
