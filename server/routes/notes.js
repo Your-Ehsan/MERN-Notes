@@ -33,11 +33,10 @@ NotesRouter.post(
   async (req, res) => {
     try {
       const error = validationResult(req),
-        { title, description, tag } = req.body,
+        { title, description } = req.body,
         _notes = new Notes({
           title,
           description,
-          tag,
           user: req.user.id,
         }),
         savedNote = await _notes.save();

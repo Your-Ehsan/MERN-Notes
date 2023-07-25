@@ -1,4 +1,4 @@
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 
 export const LoginAction = async (obj) => {
   try {
@@ -88,7 +88,7 @@ const Login = () => {
           </Form>
           <div className="py-5">
             <div className="grid grid-cols-2 gap-1">
-              <div className="text-center sm:text-left whitespace-nowrap">
+              <div className="text-center sm:text-left whitespace-nowrap"> 
                 <button className="px-5 py-4 mx-5 text-sm font-normal text-gray-500 transition duration-200 rounded-lg cursor-pointer hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

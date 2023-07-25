@@ -5,7 +5,6 @@ import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
-  redirect,
 } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
@@ -25,7 +24,7 @@ function App() {
   ProtectedRoute.propTypes = {
     children: PropTypes.element,
   };
-  
+
   return (
     <RouterProvider
       router={createBrowserRouter(

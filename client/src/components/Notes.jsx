@@ -1,54 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { NotesContext } from "../contexts/NotesContext";
 import NoteItem from "./NoteItem";
 
 const Notes = () => {
   const {
-      _Notes,
-      ShowCreateNote,
-      setNotes,
-      deleteNote,
-      EditNote,
-      setEditNote,
-      _editNote,
-      CreateNote,
-      setCreateNote,
-      setShowCreateNote,
-      addNote,
-    } = useContext(NotesContext),
-    [ShowEditNote, setShowEditNote] = useState(false);
-  const handleStartEdit = (noteId) => {
-    const noteToEdit = _Notes.find((note) => note._id === noteId);
-    setEditNote(noteToEdit);
-    setShowEditNote(true);
-  };
+    _Notes,
+    ShowCreateNote,
+    EditNote,
+    setEditNote,
+    _editNote,
+    CreateNote,
+    setCreateNote,
+    setShowCreateNote,
+    addNote,
+    ShowEditNote,
+    setShowEditNote,
+  } = useContext(NotesContext);
+
   return (
     <section>
-      {/* {Notes.map((_note) => (
-        <NoteItem key={_note._id} {..._note} />
-      ))} */}
-
-      <div>
-        {_Notes.map((note) => (
-          <div key={note._id}>
-            <div>
-              <h3>{note.title}</h3>
-              <p>{note.description}</p>
-              <button
-                onClick={() => {
-                  setEditNote(_Notes.find((_note) => _note._id === note._id));
-                  setShowEditNote(true);
-                }}
-              >
-                Edit
-              </button>
-              <button onClick={() => deleteNote(note._id)}>Delete</button>
-            </div>
-          </div>
-        ))}
+      <div className="container px-5 py-24 mx-auto">
+        <div className="flex flex-wrap -m-4">
+          {_Notes.map((_note) => (
+            <NoteItem key={_note._id} {..._note} />
+          ))}
+        </div>
       </div>
+
       {ShowEditNote && (
-        // <!-- component -->
         <form className="w-full max-w-lg">
           <div className="flex flex-wrap mb-6 -mx-3"></div>
           <div className="flex flex-wrap mb-6 -mx-3">
@@ -108,7 +87,7 @@ const Notes = () => {
                 Message
               </label>
               <textarea
-                className="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none  no-resize focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none no-resize focus:outline-none focus:bg-white focus:border-gray-500"
                 id="description"
                 value={EditNote.description}
                 onChange={(e) =>
@@ -131,29 +110,6 @@ const Notes = () => {
                 type="button"
                 onClick={() => {
                   _editNote();
-                  // setNotes((prevNotes) =>
-                  //   prevNotes.map((prevNote) =>
-                  //     prevNote._id === EditNote._id
-                  //       ? { ...prevNote, ...EditNote }
-                  //       : prevNote
-                  //   )
-                  // );
-                  
-                  // setNotes(
-                  //   _Notes.map((prevNote) =>
-                  //     prevNote._id === EditNote._id
-                  //       ? { ...prevNote, ...EditNote }
-                  //       : prevNote
-                  //   )
-                  // );
-                  // setNotes((prevNotes) =>
-                  //   prevNotes._id === EditNote._id
-                  //     ? {
-                  //         ...prevNotes,
-                  //         ...EditNote,
-                  //       }
-                  //     : prevNotes
-                  // );
                   setShowEditNote(false);
                 }}
               >
@@ -165,7 +121,6 @@ const Notes = () => {
         </form>
       )}
       {ShowCreateNote && (
-        // <!-- component -->
         <form className="w-full max-w-lg">
           <div className="flex flex-wrap mb-6 -mx-3"></div>
           <div className="flex flex-wrap mb-6 -mx-3">
@@ -225,7 +180,7 @@ const Notes = () => {
                 Message
               </label>
               <textarea
-                className="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none  no-resize focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none no-resize focus:outline-none focus:bg-white focus:border-gray-500"
                 id="description"
                 value={CreateNote.description}
                 onChange={(e) =>
@@ -248,28 +203,6 @@ const Notes = () => {
                 type="button"
                 onClick={() => {
                   addNote();
-                  // setNotes((prevNotes) =>
-                  //   prevNotes.map((prevNote) =>
-                  //     prevNote._id === EditNote._id
-                  //       ? { ...prevNote, ...EditNote }
-                  //       : prevNote
-                  //   )
-                  // );
-                  // setNotes(
-                  //   _Notes.map((prevNote) =>
-                  //     prevNote._id === EditNote._id
-                  //       ? { ...prevNote, ...EditNote }
-                  //       : prevNote
-                  //   )
-                  // );
-                  // setNotes((prevNotes) =>
-                  //   prevNotes._id === EditNote._id
-                  //     ? {
-                  //         ...prevNotes,
-                  //         ...EditNote,
-                  //       }
-                  //     : prevNotes
-                  // );
                   setShowCreateNote(false);
                 }}
               >
