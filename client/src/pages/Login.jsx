@@ -1,4 +1,4 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 
 export const LoginAction = async (obj) => {
   try {
@@ -24,8 +24,8 @@ export const LoginAction = async (obj) => {
       };
     } else {
       localStorage.setItem("token", json.authToken);
-      window.location.href = "/"; //FIXME: it is better to use redirect() from react-router-dom
-      return null;
+      // window.location.href = "/";
+      return redirect('/');
     }
   } catch (error) {
     console.log(error);

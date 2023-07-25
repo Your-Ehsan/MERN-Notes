@@ -12,11 +12,7 @@ const Header = () => {
       </Link>
       <div className="flex justify-end w-3/12">
         <div className="flex items-center">
-          {localStorage.getItem("token") !== null ? (
-            <Link to={"login"} onClick={() => localStorage.removeItem("token")}>
-              <div className={sameClasses.headerLink}>Log Out</div>
-            </Link>
-          ) : (
+          {localStorage.getItem("token") === null ? (
             <div className="flex">
               <NavLink
                 className={({ isActive }) => (isActive ? "font-bold" : "")}
@@ -31,6 +27,10 @@ const Header = () => {
                 <div className={sameClasses.headerLink}>Sign Up</div>
               </NavLink>
             </div>
+          ) : (
+            <Link to={"login"} onClick={() => localStorage.removeItem("token")}>
+              <div className={sameClasses.headerLink}>Log Out</div>
+            </Link>
           )}
         </div>
       </div>

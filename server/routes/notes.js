@@ -20,7 +20,7 @@ NotesRouter.post(
   "/createnote",
   fetchUser,
   [
-    body("title", "title must be atleasr 3 characters")
+    body("title", "title must be atleast 3 characters")
       .isString()
       .isLength({ min: 3 }),
     body("description", "description must be atleast 6 characters")
@@ -38,11 +38,11 @@ NotesRouter.post(
           title,
           description,
           user: req.user.id,
-        }),
-        savedNote = await _notes.save();
+        });
       if (!error.isEmpty()) {
         return res.status(400).json({ error: error.array() });
       }
+      const savedNote = await _notes.save();
       res.json(savedNote);
     } catch (err) {
       console.log(err);
@@ -121,7 +121,7 @@ NotesRouter.delete("/deletenote/:id", fetchUser, async (req, res) => {
   try {
     // Find the note to be delete and delete it
     let _note = await Notes.findById(req.params.id);
-    
+
     if (!_note) {
       return res.status(404).send("Not Found");
     }
@@ -133,7 +133,6 @@ NotesRouter.delete("/deletenote/:id", fetchUser, async (req, res) => {
 
     _note = await Notes.findByIdAndDelete(req.params.id);
     res.json({ Success: "Note has been deleted", note: _note });
-  
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");

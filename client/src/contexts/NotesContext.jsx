@@ -16,7 +16,7 @@ const NotesContext = createContext(),
       [CreateNote, setCreateNote] = useState({
         title: "",
         description: "",
-        tag: "",
+        tag: "General",
       }),
       getAllnotes = async () => {
         try {
@@ -164,12 +164,11 @@ const NotesContext = createContext(),
       };
 
     useEffect(() => {
-      const effect = () => getAllnotes();
+      const effect = getAllnotes();
 
-      return () => {
-        effect();
-      };
+      return () => effect;
     }, []);
+
     return (
       <NotesContext.Provider
         value={{

@@ -24,7 +24,7 @@ export const SignupAction = async (obj) => {
       }; // error from client side (custom error) 
     } else {
       localStorage.setItem("token", json.authToken);
-      return redirect("/login");
+      return redirect("/");
     }
   } catch (error) {
     console.log(error); // error from server 

@@ -4,7 +4,7 @@ const { ConnectMongoDB } = require("./Database"),
   AuthRouter = require("./routes/auth"),
   cors = require("cors"),
   corsOptions = {
-    origin: "http://localhost:5173", // Replace this with your frontend's URL
+    origin: "http://localhost:4173", // Replace this with your frontend's URL
   },
   app = express();
 
