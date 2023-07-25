@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
 
 const NotesContext = createContext(),
   NotesContextProvider = ({ children }) => {
@@ -101,7 +101,7 @@ const NotesContext = createContext(),
             "auth-token": localStorage.getItem("token"),
 
             // FIXME: fix this to user's auth-token from localstorage.
-            "Access-Control-Allow-Origin": "http://Flocalhost:5173",
+            "Access-Control-Allow-Origin": "http://localhost:5173",
           },
           body: JSON.stringify({
             ...CreateNote,
@@ -161,7 +161,10 @@ const NotesContext = createContext(),
         console.log(json);
       } catch (error) {
         console.log(error);
-        alert(error);
+        alert(
+          "Note is not deleted from the database. try to refresh or login again",
+          error
+        );
         //  json = error.message
       }
 
@@ -204,6 +207,14 @@ const NotesContext = createContext(),
             response,
           };
         }
+
+        setNotes((prevNotes) =>
+          prevNotes.map((prevNote) =>
+            prevNote._id === EditNote._id
+              ? { ...prevNote, ...EditNote }
+              : prevNote
+          )
+        );
         // EditNote._id === null;
         // setNotes((prevNotes) =>
         //   prevNotes._id === EditNote._id
@@ -214,6 +225,10 @@ const NotesContext = createContext(),
         console.log(json);
       } catch (error) {
         console.log(error);
+        alert(
+          "Note is not saved to database. try refresh or login again",
+          error
+        );
         // return error;
       }
 

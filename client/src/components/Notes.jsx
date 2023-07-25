@@ -131,13 +131,14 @@ const Notes = () => {
                 type="button"
                 onClick={() => {
                   _editNote();
-                  setNotes((prevNotes) =>
-                    prevNotes.map((prevNote) =>
-                      prevNote._id === EditNote._id
-                        ? { ...prevNote, ...EditNote }
-                        : prevNote
-                    )
-                  );
+                  // setNotes((prevNotes) =>
+                  //   prevNotes.map((prevNote) =>
+                  //     prevNote._id === EditNote._id
+                  //       ? { ...prevNote, ...EditNote }
+                  //       : prevNote
+                  //   )
+                  // );
+                  
                   // setNotes(
                   //   _Notes.map((prevNote) =>
                   //     prevNote._id === EditNote._id
