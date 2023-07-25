@@ -18,7 +18,6 @@ AuthRouter.post(
       .isLength({ min: 3 }),
     body("password", "password must be atleast 4 characters")
       .exists()
-      .isStrongPassword()
       .isLength({
         min: 4,
       }),
@@ -71,7 +70,6 @@ AuthRouter.post(
     body("email", "user alreday exist!").isString().isEmail(),
     body("password", "password is not valid")
       .exists()
-      .isStrongPassword()
       .isLength({ min: 4 }),
   ],
   async (req, res) => {

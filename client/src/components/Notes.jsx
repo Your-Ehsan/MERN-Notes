@@ -17,39 +17,10 @@ const Notes = () => {
       addNote,
     } = useContext(NotesContext),
     [ShowEditNote, setShowEditNote] = useState(false);
-
-  // const no =
-  // const  = useOutletContext()
-  // console.log(useOutletContext());
-  // const [notes, setNotes] = useState(initialNotes);
-  const [editingNote, setEditingNote] = useState(null);
-
-  // Function to delete a note
-  const handleDeleteNote = (noteId) => {
-    // const notetodel = _Notes.filter(note => {return note._id !== noteId});
-    setNotes((prevnotes) => prevnotes.filter((note) => note._id !== noteId));
-  };
-
-  // Function to start editing a note
   const handleStartEdit = (noteId) => {
     const noteToEdit = _Notes.find((note) => note._id === noteId);
     setEditNote(noteToEdit);
     setShowEditNote(true);
-  };
-
-  // Function to save the edited note
-  const handleSaveEdit = () => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note._id === editingNote._id ? editingNote : note
-      )
-    );
-    setEditingNote(null); // Clear the editing state after saving
-  };
-
-  // Function to cancel editing
-  const handleCancelEdit = () => {
-    setEditingNote(null);
   };
   return (
     <section>
@@ -63,7 +34,14 @@ const Notes = () => {
             <div>
               <h3>{note.title}</h3>
               <p>{note.description}</p>
-              <button onClick={() => handleStartEdit(note._id)}>Edit</button>
+              <button
+                onClick={() => {
+                  setEditNote(_Notes.find((_note) => _note._id === note._id));
+                  setShowEditNote(true);
+                }}
+              >
+                Edit
+              </button>
               <button onClick={() => deleteNote(note._id)}>Delete</button>
             </div>
           </div>
@@ -72,17 +50,17 @@ const Notes = () => {
       {ShowEditNote && (
         // <!-- component -->
         <form className="w-full max-w-lg">
-          <div className="flex flex-wrap -mx-3 mb-6"></div>
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap mb-6 -mx-3"></div>
+          <div className="flex flex-wrap mb-6 -mx-3">
             <div className="w-full px-3">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 htmlFor="grid-password"
               >
                 Title
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                 id="title"
                 type="text"
                 value={EditNote.title}
@@ -93,19 +71,19 @@ const Notes = () => {
                   })
                 }
               />
-              <p className="text-gray-600 text-xs italic">
+              <p className="text-xs italic text-gray-600">
                 Some tips - as long as needed
               </p>
             </div>
             <div className="w-full px-3">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 htmlFor="grid-password"
               >
                 tag
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                 id="title"
                 type="text"
                 value={EditNote.tag}
@@ -116,21 +94,21 @@ const Notes = () => {
                   })
                 }
               />
-              <p className="text-gray-600 text-xs italic">
+              <p className="text-xs italic text-gray-600">
                 Some tips - as long as needed
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap mb-6 -mx-3">
             <div className="w-full px-3">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 htmlFor="grid-password"
               >
                 Message
               </label>
               <textarea
-                className=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none"
+                className="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none  no-resize focus:outline-none focus:bg-white focus:border-gray-500"
                 id="description"
                 value={EditNote.description}
                 onChange={(e) =>
@@ -140,7 +118,7 @@ const Notes = () => {
                   })
                 }
               />
-              <p className="text-gray-600 text-xs italic">
+              <p className="text-xs italic text-gray-600">
                 Re-size can be disabled by set by resize-none / resize-y /
                 resize-x / resize
               </p>
@@ -149,7 +127,7 @@ const Notes = () => {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3">
               <button
-                className="shadow bg-teal-400 hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="px-4 py-2 font-bold text-white bg-teal-400 rounded shadow hover:bg-teal-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={() => {
                   _editNote();
@@ -188,17 +166,17 @@ const Notes = () => {
       {ShowCreateNote && (
         // <!-- component -->
         <form className="w-full max-w-lg">
-          <div className="flex flex-wrap -mx-3 mb-6"></div>
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap mb-6 -mx-3"></div>
+          <div className="flex flex-wrap mb-6 -mx-3">
             <div className="w-full px-3">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 htmlFor="grid-password"
               >
                 Title
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                 id="title"
                 type="text"
                 value={CreateNote.title}
@@ -209,19 +187,19 @@ const Notes = () => {
                   })
                 }
               />
-              <p className="text-gray-600 text-xs italic">
+              <p className="text-xs italic text-gray-600">
                 Some tips - as long as needed
               </p>
             </div>
             <div className="w-full px-3">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 htmlFor="grid-password"
               >
                 tag
               </label>
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                 id="title"
                 type="text"
                 value={CreateNote.tag}
@@ -232,21 +210,21 @@ const Notes = () => {
                   })
                 }
               />
-              <p className="text-gray-600 text-xs italic">
+              <p className="text-xs italic text-gray-600">
                 Some tips - as long as needed
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap mb-6 -mx-3">
             <div className="w-full px-3">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                 htmlFor="grid-password"
               >
                 Message
               </label>
               <textarea
-                className=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none"
+                className="block w-full h-48 px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none resize-none  no-resize focus:outline-none focus:bg-white focus:border-gray-500"
                 id="description"
                 value={CreateNote.description}
                 onChange={(e) =>
@@ -256,7 +234,7 @@ const Notes = () => {
                   })
                 }
               />
-              <p className="text-gray-600 text-xs italic">
+              <p className="text-xs italic text-gray-600">
                 Re-size can be disabled by set by resize-none / resize-y /
                 resize-x / resize
               </p>
@@ -265,7 +243,7 @@ const Notes = () => {
           <div className="md:flex md:items-center">
             <div className="md:w-1/3">
               <button
-                className="shadow bg-teal-400 hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="px-4 py-2 font-bold text-white bg-teal-400 rounded shadow hover:bg-teal-400 focus:shadow-outline focus:outline-none"
                 type="button"
                 onClick={() => {
                   addNote();

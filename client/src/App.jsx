@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login, { LoginAction } from "./pages/Login";
+import Signup, { SignupAction } from "./pages/Signup";
 import { HomeLoader } from "./utilities/HomeLoader";
 import { NotesContextProvider } from "./contexts/NotesContext";
 
@@ -17,17 +17,24 @@ function App() {
       router={createBrowserRouter(
         createRoutesFromElements(
           <Route
-            loader={HomeLoader}
             element={
-              <NotesContextProvider>
-                <MainLayout />
-              </NotesContextProvider>
+              // <NotesContextProvider>
+              <MainLayout />
+              // </NotesContextProvider>
             }
           >
             {/* TODO: convert this ⬆ to versions */}
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
+            <Route
+              index
+              loader={HomeLoader}
+              element={
+                <NotesContextProvider>
+                  <Home />
+                </NotesContextProvider>
+              }
+            />
+            <Route action={LoginAction} path="login" element={<Login />} />
+            <Route path="signup" action={SignupAction} element={<Signup />} />
           </Route>
         )
       )}

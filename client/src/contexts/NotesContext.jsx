@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useLoaderData } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const NotesContext = createContext(),
       //       __v: 0,
       //     },
       //   ],
-      [_Notes, setNotes] = useState(useLoaderData()),
+      [_Notes, setNotes] = useState([]),
       [ShowCreateNote, setShowCreateNote] = useState(false),
       [EditNote, setEditNote] = useState({
         _id: "",
@@ -40,6 +40,43 @@ const NotesContext = createContext(),
         description: "",
         tag: "",
       });
+
+    const getAllnotes = async () => {
+      try {
+        const response = await fetch(
+            `http://localhost:3000/api/notes/allnotes`,
+            {
+              method: "GET",
+              headers: {
+                Accept: "*/*",
+                "Content-Type": "application/json",
+                "auth-token": localStorage.getItem("token"),
+                "Access-Control-Allow-Origin": "http://localhost:5173",
+              },
+            }
+          ),
+          json = await response.json();
+
+        if (!response.ok) {
+          throw {
+            message: "Failed to fetch notes",
+            statusText: response.statusText,
+            status: response.status,
+            response,
+          };
+        }
+        setNotes(json);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+      const effect = () => getAllnotes();
+
+      return () => {
+        effect();
+      };
+    }, []);
 
     // loaderData = ;
     // console.log(loaderData);
@@ -61,9 +98,10 @@ const NotesContext = createContext(),
           headers: {
             Accept: "*/*",
             "Content-Type": "application/json",
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiYmRiMTAzY2JiZWZiNjNhOTFjMGRlIn0sImlhdCI6MTY5MDAzMjkxMn0.bI9vU-JNIKI5CRTZY872viQeccQ-sVMzNFpRqBurK8Q", // FIXME: fix this to user's auth-token from localstorage.
-            "Access-Control-Allow-Origin": "http://localhost:5173",
+            "auth-token": localStorage.getItem("token"),
+
+            // FIXME: fix this to user's auth-token from localstorage.
+            "Access-Control-Allow-Origin": "http://Flocalhost:5173",
           },
           body: JSON.stringify({
             ...CreateNote,
@@ -101,8 +139,7 @@ const NotesContext = createContext(),
             headers: {
               Accept: "*/*",
               "Content-Type": "application/json",
-              "auth-token":
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiYmRiMTAzY2JiZWZiNjNhOTFjMGRlIn0sImlhdCI6MTY5MDAzMjkxMn0.bI9vU-JNIKI5CRTZY872viQeccQ-sVMzNFpRqBurK8Q", // FIXME: fix this to user's auth-token from localstorage.
+              "auth-token": localStorage.getItem("token"), // FIXME: fix this to user's auth-token from localstorage.
               "Access-Control-Allow-Origin": "http://localhost:5173",
             },
           }
@@ -145,8 +182,7 @@ const NotesContext = createContext(),
               headers: {
                 Accept: "*/*",
                 "Content-Type": "application/json",
-                "auth-token":
-                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiYmRiMTAzY2JiZWZiNjNhOTFjMGRlIn0sImlhdCI6MTY5MDAzMjkxMn0.bI9vU-JNIKI5CRTZY872viQeccQ-sVMzNFpRqBurK8Q", // FIXME: fix this to user's auth-token.
+                "auth-token": localStorage.getItem("token"), // FIXME: fix this to user's auth-token.
                 "Access-Control-Allow-Origin": "http://localhost:5173",
               },
               body: JSON.stringify({
