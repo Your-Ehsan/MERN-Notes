@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-const HomeLoader = async () => {
+const HomeLoader =  () => {
 	if (localStorage.getItem("token") === null) {
 		console.log(localStorage.getItem("token"));
 		return redirect("login");
