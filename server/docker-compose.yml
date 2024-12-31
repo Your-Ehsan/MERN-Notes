@@ -1,0 +1,23 @@
+# version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"   # Expose MongoDB port to host machine
+    volumes:
+      - mongo_data:/data/db  # Persist MongoDB data
+
+  node:
+    build: .
+    container_name: note-app
+    ports:
+      - "3000:3000"  # Expose the Node.js port to the host machine
+    depends_on:
+      - mongo   # Ensure MongoDB starts before the Node.js app
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/noteapp  # Connection URI for MongoDB
+
+volumes:
+  mongo_data:
