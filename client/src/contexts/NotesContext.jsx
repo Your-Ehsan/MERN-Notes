@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { getAuthToken } from "@/lib/utils";
 
 const NotesContext = createContext(),
   NotesContextProvider = ({ children }) => {
@@ -21,8 +22,11 @@ const NotesContext = createContext(),
       getAllnotes = async () => {
         try {
           const response = await fetch(
-              `http://localhost:3000/api/notes/allnotes`,
+              `${import.meta.env.VITE_API_URL}/notes/allnotes`,
               {
+                headers: {
+                  "auth-token": getAuthToken(),
+                },
                 method: "GET",
                 credentials: "include",
               }
@@ -42,10 +46,41 @@ const NotesContext = createContext(),
           console.log(error);
         }
       },
+      getNote = async (id) => {
+        try {
+          const response = await fetch(
+              `${import.meta.env.VITE_API_URL}/notes/note/${id}`,
+              {
+                headers: {
+                  "auth-token": getAuthToken(),
+                },
+                method: "GET",
+                credentials: "include",
+              }
+            ),
+            json = await response.json();
+
+          if (!response.ok) {
+            throw {
+              message: "Failed to fetch note",
+              statusText: response.statusText,
+              status: response.status,
+              response,
+            };
+          }
+          return json
+        } catch (error) {
+          console.log(error);
+        }
+      },
       addNote = async () => {
         const response = await fetch(
-          `http://localhost:3000/api/notes/createnote`,
+          `${import.meta.env.VITE_API_URL}/notes/createnote`,
           {
+            headers: {
+              "auth-token": getAuthToken(),
+              "Content-Type": "application/json",
+            },
             method: "POST",
             credentials: "include",
             body: JSON.stringify({
@@ -73,7 +108,7 @@ const NotesContext = createContext(),
         // API Call
         try {
           const response = await fetch(
-            `http://localhost:3000/api/notes/deletenote/${id}`,
+            `${import.meta.env.VITE_API_URL}/notes/deletenote/${id}`,
             {
               method: "DELETE",
               credentials: "include",
@@ -105,13 +140,15 @@ const NotesContext = createContext(),
         // API Call
         try {
           const response = await fetch(
-              `http://localhost:3000/api/notes/updatenote/${EditNote._id}`,
+              `${import.meta.env.VITE_API_URL}/notes/updatenote/${EditNote._id}`,
               {
                 method: "PUT",
+                headers: {
+                  "auth-token": getAuthToken(),
+                  "Content-Type": "application/json",
+                },
                 credentials: "include",
-                body: JSON.stringify({
-                  ...EditNote,
-                }),
+                body: JSON.stringify(EditNote),
               }
             ),
             json = await response.json();
@@ -164,6 +201,7 @@ const NotesContext = createContext(),
           addNote,
           ShowEditNote,
           setShowEditNote,
+          getNote
         }}
       >
         {children}

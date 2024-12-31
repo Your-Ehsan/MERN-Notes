@@ -25,7 +25,7 @@ export const LoginAction = async (obj) => {
         response,
       };
     } else {
- saveAuthToken(json.authToken)
+      saveAuthToken(json.authToken);
       return json;
     }
   } catch (error) {
@@ -139,7 +139,18 @@ const Login = () => {
                   <span className="inline-block ml-1">Help</span>
                 </button>
               </div>
-            </div>
+                  </div>
+              <div className="flex text-[14px] justify-center content-center items-center text-pretty text-muted-foreground w-full flex-nowrap">
+                <span>
+                  New User? &nbsp;
+                  <Link
+                    className="text-blue-400 hover:text-blue-500 duration-300"
+                    to={"/signup"}
+                  >
+                    Create a account
+                  </Link>
+                </span>
+              </div>
           </div>
         </div>
         <div className="py-5">
@@ -173,7 +184,5 @@ const Login = () => {
     </div>
   );
 };
-// Login.prototype = {
-//   authToken: PropTypes.string,
-// };
+
 export default Login;

@@ -56,13 +56,13 @@ NotesRouter.put(
   "/updatenote/:id",
   fetchUser,
   [
-    body("title", "title must be atleasr 3 characters")
+    body("title", "title must be atleast 3 characters")
       .isString()
       .isLength({ min: 3 }),
     body("description", "description must be atleast 6 characters")
       .isString()
       .isLength({ min: 6 }),
-    body("tag", "tag should not greater then 10 words")
+    body("tag", "tag should not greater then 50 words")
       .isString()
       .isLength({ max: 50 }),
   ],
@@ -74,6 +74,7 @@ NotesRouter.put(
         updatednote = {
           updatedAt: Date.now(),
         };
+      console.log(req.body); // {} dont know why 
 
       let _note = await Notes.findById(req.params.id);
 

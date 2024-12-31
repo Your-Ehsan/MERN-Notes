@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { ConnectMongoDB } = require("./Database"),
   express = require("express"),
   NotesRouter = require("./routes/notes"),
@@ -5,10 +6,10 @@ const { ConnectMongoDB } = require("./Database"),
   cors = require("cors"),
   app = express(),
   cookieParser = require("cookie-parser");
-app.use(
-  cookieParser(),
-  cors({ credentials: true, origin: "http://localhost:4173" })
-);
+cors({ credentials: true, origin: process.env.CLIENT_URL });
+app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
+
+app.use(cookieParser());
 app.use(express.json());
 // 🔥 🛣 Available Routes | 🚩
 app.use("/api/auth", AuthRouter);
