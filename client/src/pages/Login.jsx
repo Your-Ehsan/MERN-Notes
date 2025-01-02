@@ -8,7 +8,7 @@ export const LoginAction = async (obj) => {
     const formData = await obj.request.formData(),
       email = formData.get("email"),
       password = formData.get("password"),
-      response = await fetch("http://localhost:3000/api/auth/login", {
+      response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

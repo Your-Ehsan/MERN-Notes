@@ -2,7 +2,8 @@
   "name": "notes-app",
   "version": "1.0.0",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "description": "Note Application using MERN stack technologies",
   "main": "index.js",
